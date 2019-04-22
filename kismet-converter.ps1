@@ -32,7 +32,30 @@
       Add-Member -InputObject $compositeWirelessNetworkSSID -MemberType NoteProperty -Name "wpa_version" -Value $_.'ssid'.'wpa-version'
       Add-Member -InputObject $compositeWirelessNetworkSSID -MemberType NoteProperty -Name "essid" -Value $_.'ssid'.'essid'.InnerText
 
-      
+      $compositeWirelessNetworkPackets = New-Object Object 
+
+      Add-Member -InputObject $compositeWirelessNetworkPackets -MemberType NoteProperty -Name "llc" -Value $_.'packets'.'llc'
+      Add-Member -InputObject $compositeWirelessNetworkPackets -MemberType NoteProperty -Name "data" -Value $_.'packets'.'data'
+      Add-Member -InputObject $compositeWirelessNetworkPackets -MemberType NoteProperty -Name "crypt" -Value $_.'packets'.'crypt'
+      Add-Member -InputObject $compositeWirelessNetworkPackets -MemberType NoteProperty -Name "total" -Value $_.'packets'.'total'
+      Add-Member -InputObject $compositeWirelessNetworkPackets -MemberType NoteProperty -Name "fragments" -Value $_.'packets'.'fragments'
+      Add-Member -InputObject $compositeWirelessNetworkPackets -MemberType NoteProperty -Name "retries" -Value $_.'packets'.'retries'
+
+      $compositeWirelessNetworkSNRInfo = New-Object Object 
+
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "last_signal_dbm" -Value $_.'snr-info'.'last_signal_dbm'
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "last_noise_dbm" -Value $_.'snr-info'.'last_noise_dbm'
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "last_signal_rssi" -Value $_.'snr-info'.'last_signal_rssi'
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "last_noise_rssi" -Value $_.'snr-info'.'last_noise_rssi'
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "min_signal_dbm" -Value $_.'snr-info'.'min_signal_dbm'
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "min_noise_dbm" -Value $_.'snr-info'.'min_noise_dbm'
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "min_signal_rssi" -Value $_.'snr-info'.'min_signal_rssi'
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "min_noise_rssi" -Value $_.'snr-info'.'min_noise_rssi'
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "max_signal_dbm" -Value $_.'snr-info'.'max_signal_dbm'
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "max_noise_dbm" -Value $_.'snr-info'.'max_noise_dbm'
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "max_signal_rssi" -Value $_.'snr-info'.'max_signal_rssi'
+      Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "max_noise_rssi" -Value $_.'snr-info'.'max_noise_rssi'
+
 
       $compositeWirelessClient = New-Object Object
 
@@ -98,10 +121,14 @@
 
     $compositeWirelessNetwork
     $compositeWirelessNetworkSSID
+    $compositeWirelessNetworkPackets
+    $compositeWirelessNetworkSNRInfo
+
     $compositeWirelessClient
     $compositeWirelessClientPackets
     $compositeWirelessClientSNRInfo
     $compositeWirelessClientGPSInfo
     $compositeWirelessClientSeenCard
+    
 
     Read-Host -Prompt "enter"
