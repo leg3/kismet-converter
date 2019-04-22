@@ -73,6 +73,12 @@
       Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "avg-lon" -Value $_.'gps-info'.'avg-lon'
       Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "avg-alt" -Value $_.'gps-info'.'avg-alt'
 
+      $compositeWirelessNetworkSeenCard = New-Object Object 
+
+      Add-Member -InputObject $compositeWirelessNetworkSeenCard -MemberType NoteProperty -Name "seen-uuid" -Value $_.'seen-card'
+      Add-Member -InputObject $compositeWirelessNetworkSeenCard -MemberType NoteProperty -Name "seen-time" -Value $_.'seen-time'
+      Add-Member -InputObject $compositeWirelessNetworkSeenCard -MemberType NoteProperty -Name "seen-packets" -Value $_.'seen-packets'
+
 
       $compositeWirelessClient = New-Object Object
 
@@ -141,6 +147,7 @@
     $compositeWirelessNetworkPackets
     $compositeWirelessNetworkSNRInfo
     $compositeWirelessNetworkGPSInfo
+    $compositeWirelessNetworkSeenCard
 
     $compositeWirelessClient
     $compositeWirelessClientPackets
