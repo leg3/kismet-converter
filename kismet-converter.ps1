@@ -56,6 +56,23 @@
       Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "max_signal_rssi" -Value $_.'snr-info'.'max_signal_rssi'
       Add-Member -InputObject $compositeWirelessNetworkSNRInfo -MemberType NoteProperty -Name "max_noise_rssi" -Value $_.'snr-info'.'max_noise_rssi'
 
+      $compositeWirelessNetworkGPSInfo = New-Object Object 
+
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "min-lat" -Value $_.'gps-info'.'min-lat'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "min-lon" -Value $_.'gps-info'.'min-lon'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "min-alt" -Value $_.'gps-info'.'min-alt'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "min-spd" -Value $_.'gps-info'.'min-spd'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "max-lat" -Value $_.'gps-info'.'max-lat'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "max-lon" -Value $_.'gps-info'.'max-lon'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "max-alt" -Value $_.'gps-info'.'max-alt'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "max-spd" -Value $_.'gps-info'.'max-spd'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "peak-lat" -Value $_.'gps-info'.'peak-lat'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "peak-lon" -Value $_.'gps-info'.'peak-lon'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "peak-alt" -Value $_.'gps-info'.'peak-alt'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "avg-lat" -Value $_.'gps-info'.'avg-lat'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "avg-lon" -Value $_.'gps-info'.'avg-lon'
+      Add-Member -InputObject $compositeWirelessNetworkGPSInfo -MemberType NoteProperty -Name "avg-alt" -Value $_.'gps-info'.'avg-alt'
+
 
       $compositeWirelessClient = New-Object Object
 
@@ -123,6 +140,7 @@
     $compositeWirelessNetworkSSID
     $compositeWirelessNetworkPackets
     $compositeWirelessNetworkSNRInfo
+    $compositeWirelessNetworkGPSInfo
 
     $compositeWirelessClient
     $compositeWirelessClientPackets
