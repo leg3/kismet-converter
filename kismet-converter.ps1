@@ -4,18 +4,6 @@
   
     $xml.'detection-run'.'wireless-network' | ForEach-Object {
   
-      # Create a new object for SSID information that holds all of our values for this row. 
-      $compositeSSID = New-Object Object
-
-      Add-Member -InputObject $compositeSSID -MemberType NoteProperty -Name "type" -Value $_.'ssid'.'type'
-      Add-Member -InputObject $compositeSSID -MemberType NoteProperty -Name "max-rate" -Value $_.'ssid'.'max-rate'
-      Add-Member -InputObject $compositeSSID -MemberType NoteProperty -Name "packets" -Value $_.'ssid'.'packets'
-      Add-Member -InputObject $compositeSSID -MemberType NoteProperty -Name "baeconrate" -Value $_.'ssid'.'beaconrate'
-      Add-Member -InputObject $compositeSSID -MemberType NoteProperty -Name "wps" -Value $_.'ssid'.'wps'
-      Add-Member -InputObject $compositeSSID -MemberType NoteProperty -Name "encryption" -Value $_.'ssid'.'encryption'
-      Add-Member -InputObject $compositeSSID -MemberType NoteProperty -Name "wpa_version" -Value $_.'ssid'.'wpa-version'
-      Add-Member -InputObject $compositeSSID -MemberType NoteProperty -Name "essid" -Value $_.'ssid'.'essid'.InnerText
-
       $compositeWirelessNetwork = New-Object Object
 
       Add-Member -InputObject $compositeWirelessNetwork -MemberType NoteProperty -Name "bssid" -Value $_.'BSSID'
@@ -32,6 +20,19 @@
       Add-Member -InputObject $compositeWirelessNetwork -MemberType NoteProperty -Name "cdp-portid" -Value $_.'cdp-portid'
       Add-Member -InputObject $compositeWirelessNetwork -MemberType NoteProperty -Name "seencard" -Value $_.'seencard'
       Add-Member -InputObject $compositeWirelessNetwork -MemberType NoteProperty -Name "wireless-client" -Value $_.'wireless-client'
+
+      $compositeWirelessNetworkSSID = New-Object Object
+
+      Add-Member -InputObject $compositeWirelessNetworkSSID -MemberType NoteProperty -Name "type" -Value $_.'ssid'.'type'
+      Add-Member -InputObject $compositeWirelessNetworkSSID -MemberType NoteProperty -Name "max-rate" -Value $_.'ssid'.'max-rate'
+      Add-Member -InputObject $compositeWirelessNetworkSSID -MemberType NoteProperty -Name "packets" -Value $_.'ssid'.'packets'
+      Add-Member -InputObject $compositeWirelessNetworkSSID -MemberType NoteProperty -Name "baeconrate" -Value $_.'ssid'.'beaconrate'
+      Add-Member -InputObject $compositeWirelessNetworkSSID -MemberType NoteProperty -Name "wps" -Value $_.'ssid'.'wps'
+      Add-Member -InputObject $compositeWirelessNetworkSSID -MemberType NoteProperty -Name "encryption" -Value $_.'ssid'.'encryption'
+      Add-Member -InputObject $compositeWirelessNetworkSSID -MemberType NoteProperty -Name "wpa_version" -Value $_.'ssid'.'wpa-version'
+      Add-Member -InputObject $compositeWirelessNetworkSSID -MemberType NoteProperty -Name "essid" -Value $_.'ssid'.'essid'.InnerText
+
+      
 
       $compositeWirelessClient = New-Object Object
 
@@ -96,7 +97,7 @@
     }
 
     $compositeWirelessNetwork
-    $compositeSSID
+    $compositeWirelessNetworkSSID
     $compositeWirelessClient
     $compositeWirelessClientPackets
     $compositeWirelessClientSNRInfo
