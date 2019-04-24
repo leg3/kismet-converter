@@ -1,1 +1,13 @@
 Kismet-20190416-17-32-26-1.netxml
+wirelessNetworkSeenCard.csv
+wirelessClient.csv
+wirelessClientGPSInfo.csv
+wirelessClientPackets.csv
+wirelessClientSNRInfo.csv
+wirelessNetwork.csv
+wirelessNetworkGPSInfo.csv
+wirelessNetworkPackets.csv
+wirelessNetworkSNRInfo.csv
+wirelessNetworkSSID.csv
+detectionRun.csv
+cardSource.csv
