@@ -1,20 +1,24 @@
-
+<#
   $inputPath = "${psscriptroot}\*.netxml"
-    [xml]$xml = Get-Content $inputPath # this is the command we will use to parse the kml file which is actually xml
-  
+    [xml]$xml = Get-Content $inputPath # load the .netxml file to be processed
+#>
+
+function parseNetXML ($file) { 
+
+  $inputPath = $file
+  $outputPath = $file
+
+  [xml]$xml = Get-Content $inputPath # load the .netxml file to be processed
+
     $xml.'detection-run' | ForEach-Object {
   
-      # Create the detection-run master object.  We will be making a database of these objects
+      # Create the detection-run object.  We will be making a database of these objects
       $detectionRun = New-Object Object 
 
       Add-Member -InputObject $detectionRun -MemberType NoteProperty -Name "kismet-version" -Value $_.'kismet-version'
       Add-Member -InputObject $detectionRun -MemberType NoteProperty -Name "start-time" -Value $_.'start-time'
 
-      $outputPath = ${psscriptroot}
-
-      # Export the $compositeSSID object to csv file and append
-      $detectionRun | Export-Csv -Path "$outputPath\detectionRun.csv" -Append -NoTypeInformation
-
+      $detectionRun | Export-Csv -Path "${psscriptroot}\detectionRun.csv" -Append -NoTypeInformation
 
     }
 
@@ -32,10 +36,10 @@
       Add-Member -InputObject $cardSouce -MemberType NoteProperty -Name "card-hop" -Value $_.'card-hop'
       Add-Member -InputObject $cardSouce -MemberType NoteProperty -Name "card-channels" -Value $_.'card-channels'
 
-      $outputPath = ${psscriptroot}
+      
 
-      # Export the $compositeSSID object to csv file and append
-      $cardSouce | Export-Csv -Path "$outputPath\cardSource.csv" -Append -NoTypeInformation
+      
+      $cardSouce | Export-Csv -Path "${psscriptroot}\cardSource.csv" -Append -NoTypeInformation
 
     }
       
@@ -59,10 +63,10 @@
       Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "seencard" -Value $_.'seencard'
       Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "wireless-client" -Value $_.'wireless-client'
 
-      $outputPath = ${psscriptroot}
+      
 
-      # Export the $compositeSSID object to csv file and append
-      $wirelessNetwork | Export-Csv -Path "$outputPath\wirelessNetwork.csv" -Append -NoTypeInformation
+      
+      $wirelessNetwork | Export-Csv -Path "${psscriptroot}\wirelessNetwork.csv" -Append -NoTypeInformation
 
       }
 
@@ -80,10 +84,10 @@
       Add-Member -InputObject $wirelessNetworkSSID -MemberType NoteProperty -Name "wpa_version" -Value $_.'wpa-version'
       Add-Member -InputObject $wirelessNetworkSSID -MemberType NoteProperty -Name "essid" -Value $_.'essid'.InnerText
 
-      $outputPath = ${psscriptroot}
+      
 
-      # Export the $compositeSSID object to csv file and append
-      $wirelessNetworkSSID | Export-Csv -Path "$outputPath\wirelessNetworkSSID.csv" -Append -NoTypeInformation
+      
+      $wirelessNetworkSSID | Export-Csv -Path "${psscriptroot}\wirelessNetworkSSID.csv" -Append -NoTypeInformation
 
       }
     
@@ -100,10 +104,10 @@
       Add-Member -InputObject $wirelessNetworkPackets -MemberType NoteProperty -Name "fragments" -Value $_.'fragments'
       Add-Member -InputObject $wirelessNetworkPackets -MemberType NoteProperty -Name "retries" -Value $_.'retries'
 
-      $outputPath = ${psscriptroot}
+      
 
-      # Export the $compositeSSID object to csv file and append
-      $wirelessNetworkPackets | Export-Csv -Path "$outputPath\wirelessNetworkPackets.csv" -Append -NoTypeInformation
+      
+      $wirelessNetworkPackets | Export-Csv -Path "${psscriptroot}\wirelessNetworkPackets.csv" -Append -NoTypeInformation
 
       }
 
@@ -126,10 +130,10 @@
       Add-Member -InputObject $wirelessNetworkSNRInfo -MemberType NoteProperty -Name "max_signal_rssi" -Value $_.'max_signal_rssi'
       Add-Member -InputObject $wirelessNetworkSNRInfo -MemberType NoteProperty -Name "max_noise_rssi" -Value $_.'max_noise_rssi'
 
-      $outputPath = ${psscriptroot}
+      
 
-      # Export the $compositeSSID object to csv file and append
-      $wirelessNetworkSNRInfo | Export-Csv -Path "$outputPath\wirelessNetworkSNRInfo.csv" -Append -NoTypeInformation
+      
+      $wirelessNetworkSNRInfo | Export-Csv -Path "${psscriptroot}\wirelessNetworkSNRInfo.csv" -Append -NoTypeInformation
 
       }
 
@@ -155,10 +159,10 @@
       Add-Member -InputObject $wirelessNetworkGPSInfo -MemberType NoteProperty -Name "avg-lon" -Value $_.'avg-lon'
       Add-Member -InputObject $wirelessNetworkGPSInfo -MemberType NoteProperty -Name "avg-alt" -Value $_.'avg-alt'
 
-      $outputPath = ${psscriptroot}
+      
 
-      # Export the $compositeSSID object to csv file and append
-      $wirelessNetworkGPSInfo | Export-Csv -Path "$outputPath\wirelessNetworkGPSInfo.csv" -Append -NoTypeInformation
+      
+      $wirelessNetworkGPSInfo | Export-Csv -Path "${psscriptroot}\wirelessNetworkGPSInfo.csv" -Append -NoTypeInformation
 
       }
 
@@ -172,10 +176,10 @@
       Add-Member -InputObject $wirelessNetworkSeenCard -MemberType NoteProperty -Name "seen-time" -Value $_.'seen-time'
       Add-Member -InputObject $wirelessNetworkSeenCard -MemberType NoteProperty -Name "seen-packets" -Value $_.'seen-packets'
 
-      $outputPath = ${psscriptroot}
+      
 
-      # Export the $compositeSSID object to csv file and append
-      $wirelessNetworkSeenCard | Export-Csv -Path "$outputPath\wirelessNetworkSeenCard.csv" -Append -NoTypeInformation
+      
+      $wirelessNetworkSeenCard | Export-Csv -Path "${psscriptroot}\wirelessNetworkSeenCard.csv" -Append -NoTypeInformation
 
       }
 
@@ -195,10 +199,10 @@
       Add-Member -InputObject $wirelessClient -MemberType NoteProperty -Name "gps-info" -Value $_.'gps-info'
       Add-Member -InputObject $wirelessClient -MemberType NoteProperty -Name "seen-card" -Value $_.'seen-card'
 
-      $outputPath = ${psscriptroot}
+      
 
-      # Export the $compositeSSID object to csv file and append
-      $wirelessClient | Export-Csv -Path "$outputPath\wirelessClient.csv" -Append -NoTypeInformation
+      
+      $wirelessClient | Export-Csv -Path "${psscriptroot}\wirelessClient.csv" -Append -NoTypeInformation
 
 
       }
@@ -216,10 +220,10 @@
       Add-Member -InputObject $wirelessClientPackets -MemberType NoteProperty -Name "fragments" -Value $_.'fragments'
       Add-Member -InputObject $wirelessClientPackets -MemberType NoteProperty -Name "retries" -Value $_.'retries'
 
-      $outputPath = ${psscriptroot}
+      
 
-      # Export the $compositeSSID object to csv file and append
-      $wirelessClientPackets | Export-Csv -Path "$outputPath\wirelessClientPackets.csv" -Append -NoTypeInformation
+      
+      $wirelessClientPackets | Export-Csv -Path "${psscriptroot}\wirelessClientPackets.csv" -Append -NoTypeInformation
 
     }
 
@@ -242,10 +246,10 @@
       Add-Member -InputObject $wirelessClientSNRInfo -MemberType NoteProperty -Name "max_signal_rssi" -Value $_.'max_signal_rssi'
       Add-Member -InputObject $wirelessClientSNRInfo -MemberType NoteProperty -Name "max_noise_rssi" -Value $_.'max_noise_rssi'
 
-      $outputPath = ${psscriptroot}
+      
 
-      # Export the $compositeSSID object to csv file and append
-      $wirelessClientSNRInfo | Export-Csv -Path "$outputPath\wirelessClientSNRInfo.csv" -Append -NoTypeInformation
+      
+      $wirelessClientSNRInfo | Export-Csv -Path "${psscriptroot}\wirelessClientSNRInfo.csv" -Append -NoTypeInformation
 
       }
 
@@ -270,10 +274,10 @@
       Add-Member -InputObject $wirelessClientGPSInfo -MemberType NoteProperty -Name "avg-lon" -Value $_.'avg-lon'
       Add-Member -InputObject $wirelessClientGPSInfo -MemberType NoteProperty -Name "avg-alt" -Value $_.'avg-alt'
 
-      $outputPath = ${psscriptroot}
+      
 
-      # Export the $compositeSSID object to csv file and append
-      $wirelessClientGPSInfo | Export-Csv -Path "$outputPath\wirelessClientGPSInfo.csv" -Append -NoTypeInformation
+      
+      $wirelessClientGPSInfo | Export-Csv -Path "${psscriptroot}\wirelessClientGPSInfo.csv" -Append -NoTypeInformation
 
       }
 
@@ -286,24 +290,29 @@
       Add-Member -InputObject $wirelessClientSeenCard -MemberType NoteProperty -Name "seen-time" -Value $_.'seen-time'
       Add-Member -InputObject $wirelessClientSeenCard -MemberType NoteProperty -Name "seen-packets" -Value $_.'seen-packets'
 
+      
+
+      
+      $wirelessClientSeenCard | Export-Csv -Path "${psscriptroot}\wirelessClientSeenCard.csv" -Append -NoTypeInformation
+
     }
-<#
-    $wirelessNetwork
-    $wirelessNetworkSSID
-    $wirelessNetworkPackets
-    $wirelessNetworkSNRInfo
-    $wirelessNetworkGPSInfo
-    $wirelessNetworkSeenCard
 
-    $wirelessClient
-    $wirelessClientPackets
-    $wirelessClientSNRInfo
-    $wirelessClientGPSInfo
-    $wirelessClientSeenCard
+  }
 
-    $detectionRun
-    $cardSouce
+  Get-ChildItem -Path ${psscriptroot} -Name -Filter "*.netxml" | ForEach-Object {
 
+    $name = $_.Replace(".netxml","")
+    mkdir $name
+    $destination = Get-ChildItem -Path ./ -Directory $name
+    Write-Host ("Processing " + $_ + "`n")
+    parseNetXML ($_);
+    Write-Host ($_ + " Processed...`n")
+  
+    Get-ChildItem -Path ${psscriptroot} -Name -Filter "*.csv" | ForEach-Object {
+  
+      Move-Item -Path .\*.csv -Destination $destination
+  
+    }
+  }
 
-#>
     Read-Host -Prompt "enter"
