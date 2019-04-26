@@ -46,29 +46,50 @@ function parseNetXML ($file) {
     
     $xml.'detection-run'.'wireless-network' | ForEach-Object {
 
-    # Create the wirelessNetworkObject
-
-      $startTime = $xml.'detection-run'.'start-time'
-      $wirelessNetwork = New-Object Object
-
-      if ( $_ -ne $NULL) {
-
-      Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "bssid" -Value $_.'BSSID'
-      Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "manuf" -Value $_.'manuf'
-      Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "channel" -Value $_.'channel'
-      Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "freqmhz-count" -Value $_.'freqmhz'.count
-      Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "maxseenrate" -Value $_.'maxseenrate'
-      Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "datasize" -Value $_.'datasize'
-      Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "bsstimestamp" -Value $_.'bsstimestamp'
-      Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "cdp-device" -Value $_.'cdp-device'
-      Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "cdp-portid" -Value $_.'cdp-portid'
-      Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "start-time" -Value $startTime
-
-      $wirelessNetwork | Export-Csv -Path "${psscriptroot}\wirelessNetwork.csv" -Append -NoTypeInformation
-
-      }
-
-      }
+      # Create the wirelessNetworkObject
+  
+        $startTime = $xml.'detection-run'.'start-time'
+        $wirelessNetwork = New-Object Object
+        $index = $xml.'detection-run'.'wireless-network'.indexOf($_);
+        $BSSID = $xml.'detection-run'.'wireless-network'.'BSSID'[$index]
+  
+        if ( $_ -ne $NULL) {
+  
+        Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "bssid" -Value $_.'BSSID'
+        Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "manuf" -Value $_.'manuf'
+        Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "channel" -Value $_.'channel'
+        Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "freqmhz-count" -Value $_.'freqmhz'.count
+        Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "maxseenrate" -Value $_.'maxseenrate'
+        Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "datasize" -Value $_.'datasize'
+        Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "bsstimestamp" -Value $_.'bsstimestamp'
+        Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "cdp-device" -Value $_.'cdp-device'
+        Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "cdp-portid" -Value $_.'cdp-portid'
+        Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "start-time" -Value $startTime
+  
+        # Nested object
+  
+        $xml.'detection-run'.'wireless-network'.'freqmhz' | ForEach-Object {
+  
+          # Create the wirelessNetworkFreqMHZ object
+  
+          $wirelessNetworkFreqMHZ = New-Object Object 
+  
+          if ( $_ -ne $NULL) {
+  
+          Add-Member -InputObject $wirelessNetworkFreqMHZ -MemberType NoteProperty -Name "freqmhz" -Value $_
+          Add-Member -InputObject $wirelessNetworkFreqMHZ -MemberType NoteProperty -Name "bssid" -Value $BSSID
+  
+          $wirelessNetworkFreqMHZ | Export-Csv -Path "${psscriptroot}\wirelessNetworkFreqMHZ.csv" -Append -NoTypeInformation
+  
+        }
+  
+        }
+  
+        $wirelessNetwork | Export-Csv -Path "${psscriptroot}\wirelessNetwork.csv" -Append -NoTypeInformation
+  
+        }
+  
+        }
 
       $xml.'detection-run'.'wireless-network'.'ssid' | ForEach-Object {
 
@@ -476,6 +497,20 @@ Get-ChildItem -Path ${psscriptroot} -Recurse -Name -Filter "wirelessNetwork.csv"
   $getFirstLine = $false
   Add-Content "${psscriptroot}\composite_wirelessNetwork.csv" $linesToWrite
 }
+
+# Concatenate the "wirelessNetworkFreqMHZ" .csv files 
+$getFirstLine = $true
+Get-ChildItem -Path ${psscriptroot} -Recurse -Name -Filter "wirelessNetworkFreqMHZ.csv" | ForEach-Object {
+  $filePath = $_
+  $lines = Get-Content $filePath
+  $linesToWrite = switch ($getFirstLine) {
+    $true { $lines }
+    $false { $lines | Select-Object -Skip 1 }
+  }
+  $getFirstLine = $false
+  Add-Content "${psscriptroot}\composite_wirelessNetworkFreqMHZ.csv" $linesToWrite
+}
+
 
 # Concatenate the "wirelessNetworkGPSInfo" .csv files 
 $getFirstLine = $true
