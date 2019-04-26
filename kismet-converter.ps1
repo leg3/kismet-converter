@@ -9,12 +9,15 @@ function parseNetXML ($file) {
       # Create the detection-run object.  We will be making a database of these objects
       $detectionRun = New-Object Object 
 
+      if ( $_ -ne $NULL) {
    
       Add-Member -InputObject $detectionRun -MemberType NoteProperty -Name "kismet-version" -Value $_.'kismet-version'
       Add-Member -InputObject $detectionRun -MemberType NoteProperty -Name "start-time" -Value $_.'start-time'
     
       $detectionRun | Export-Csv -Path "${psscriptroot}\detectionRun.csv" -Append -NoTypeInformation
 
+      }
+      
     }
 
     $xml.'detection-run'.'card-source' | ForEach-Object {
@@ -23,6 +26,8 @@ function parseNetXML ($file) {
 
       $startTime = $xml.'detection-run'.'start-time'
       $cardSouce = New-Object Object 
+
+      if ( $_ -ne $NULL) {
 
       Add-Member -InputObject $cardSouce -MemberType NoteProperty -Name "card-source" -Value $_.'card-source'
       Add-Member -InputObject $cardSouce -MemberType NoteProperty -Name "card-name" -Value $_.'card-name'
@@ -35,6 +40,8 @@ function parseNetXML ($file) {
 
       $cardSouce | Export-Csv -Path "${psscriptroot}\cardSource.csv" -Append -NoTypeInformation
 
+      }
+
     }
     
     $xml.'detection-run'.'wireless-network' | ForEach-Object {
@@ -43,6 +50,8 @@ function parseNetXML ($file) {
 
       $startTime = $xml.'detection-run'.'start-time'
       $wirelessNetwork = New-Object Object
+
+      if ( $_ -ne $NULL) {
 
       Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "bssid" -Value $_.'BSSID'
       Add-Member -InputObject $wirelessNetwork -MemberType NoteProperty -Name "manuf" -Value $_.'manuf'
@@ -59,6 +68,8 @@ function parseNetXML ($file) {
 
       }
 
+      }
+
       $xml.'detection-run'.'wireless-network'.'ssid' | ForEach-Object {
 
     # Create the wirelessNetworkSSID object
@@ -67,6 +78,8 @@ function parseNetXML ($file) {
       $wirelessNetworkSSID = New-Object Object
       $index = $xml.'detection-run'.'wireless-network'.'ssid'.indexOf($_);
       $BSSID = $xml.'detection-run'.'wireless-network'.'BSSID'[$index]
+
+      if ( $_ -ne $NULL) {
 
       Add-Member -InputObject $wirelessNetworkSSID -MemberType NoteProperty -Name "type" -Value $_.'type'
       Add-Member -InputObject $wirelessNetworkSSID -MemberType NoteProperty -Name "max-rate" -Value $_.'max-rate'
@@ -82,6 +95,8 @@ function parseNetXML ($file) {
       $wirelessNetworkSSID | Export-Csv -Path "${psscriptroot}\wirelessNetworkSSID.csv" -Append -NoTypeInformation
 
       }
+
+      }
     
     $xml.'detection-run'.'wireless-network'.'packets' | ForEach-Object {
 
@@ -91,6 +106,8 @@ function parseNetXML ($file) {
       $wirelessNetworkPackets = New-Object Object
       $index = $xml.'detection-run'.'wireless-network'.'packets'.indexOf($_);
       $BSSID = $xml.'detection-run'.'wireless-network'.'BSSID'[$index]
+
+      if ( $_ -ne $NULL) {
 
       Add-Member -InputObject $wirelessNetworkPackets -MemberType NoteProperty -Name "llc" -Value $_.'llc'
       Add-Member -InputObject $wirelessNetworkPackets -MemberType NoteProperty -Name "data" -Value $_.'data'
@@ -105,6 +122,8 @@ function parseNetXML ($file) {
 
       }
 
+      }
+
     $xml.'detection-run'.'wireless-network'.'snr-info' | ForEach-Object {
 
     # Create the wirelessNetworksInfo Object
@@ -113,6 +132,8 @@ function parseNetXML ($file) {
       $wirelessNetworkSNRInfo = New-Object Object
       $index = $xml.'detection-run'.'wireless-network'.'snr-info'.indexOf($_);
       $BSSID = $xml.'detection-run'.'wireless-network'.'BSSID'[$index] 
+
+      if ( $_ -ne $NULL) {
 
       Add-Member -InputObject $wirelessNetworkSNRInfo -MemberType NoteProperty -Name "last_signal_dbm" -Value $_.'last_signal_dbm'
       Add-Member -InputObject $wirelessNetworkSNRInfo -MemberType NoteProperty -Name "last_noise_dbm" -Value $_.'last_noise_dbm'
@@ -133,6 +154,8 @@ function parseNetXML ($file) {
 
       }
 
+      }
+
     $xml.'detection-run'.'wireless-network'.'gps-info' | ForEach-Object {
 
     # Create the wirelessNetworkGPSInfo object
@@ -141,6 +164,8 @@ function parseNetXML ($file) {
       $wirelessNetworkGPSInfo = New-Object Object
       $index = $xml.'detection-run'.'wireless-network'.'gps-info'.indexOf($_);
       $BSSID = $xml.'detection-run'.'wireless-network'.'BSSID'[$index]
+
+      if ( $_ -ne $NULL) {
 
       Add-Member -InputObject $wirelessNetworkGPSInfo -MemberType NoteProperty -Name "min-lat" -Value $_.'min-lat'
       Add-Member -InputObject $wirelessNetworkGPSInfo -MemberType NoteProperty -Name "min-lon" -Value $_.'min-lon'
@@ -163,22 +188,28 @@ function parseNetXML ($file) {
 
       }
 
+      }
+
     $xml.'detection-run'.'wireless-network'.'seen-card' | ForEach-Object {
 
     # Create the wirelessNetworkSeenCard Object
 
       $startTime = $xml.'detection-run'.'start-time'
       $wirelessNetworkSeenCard = New-Object Object
-      $index = $xml.'detection-run'.'wireless-network'.'seen-card'.indexOf($_);
-      $BSSID = $xml.'detection-run'.'wireless-network'.'BSSID'[$index]
+      #$index = $xml.'detection-run'.'wireless-network'.'seen-card'.indexOf($_);
+      #$BSSID = $xml.'detection-run'.'wireless-network'.'BSSID'[$index]
 
-      Add-Member -InputObject $wirelessNetworkSeenCard -MemberType NoteProperty -Name "seen-uuid" -Value $_.'seen-card'
+      if ( $_ -ne $NULL) {
+
+      Add-Member -InputObject $wirelessNetworkSeenCard -MemberType NoteProperty -Name "seen-uuid" -Value $_.'seen-uuid'
       Add-Member -InputObject $wirelessNetworkSeenCard -MemberType NoteProperty -Name "seen-time" -Value $_.'seen-time'
       Add-Member -InputObject $wirelessNetworkSeenCard -MemberType NoteProperty -Name "seen-packets" -Value $_.'seen-packets'
       Add-Member -InputObject $wirelessNetworkSeenCard -MemberType NoteProperty -Name "start-time" -Value $startTime
-      Add-Member -InputObject $wirelessNetworkSeenCard -MemberType NoteProperty -Name "BSSID" -Value $BSSID
+      #Add-Member -InputObject $wirelessNetworkSeenCard -MemberType NoteProperty -Name "BSSID" -Value $BSSID
 
       $wirelessNetworkSeenCard | Export-Csv -Path "${psscriptroot}\wirelessNetworkSeenCard.csv" -Append -NoTypeInformation
+
+      }
 
       }
 
@@ -188,8 +219,10 @@ function parseNetXML ($file) {
 
       $startTime = $xml.'detection-run'.'start-time'
       $wirelessClient = New-Object Object
-      $index = $xml.'detection-run'.'wireless-network'.'wireless-client'.indexOf($_);
-      $BSSID = $xml.'detection-run'.'wireless-network'.'BSSID'[$index]
+      #$index = $xml.'detection-run'.'wireless-network'.'wireless-client'.indexOf($_);
+      #$BSSID = $xml.'detection-run'.'wireless-network'.'BSSID'[$index]
+
+      if ( $_ -ne $NULL) {
 
       Add-Member -InputObject $wirelessClient -MemberType NoteProperty -Name "client-mac" -Value $_.'client-mac'
       Add-Member -InputObject $wirelessClient -MemberType NoteProperty -Name "client-manuf" -Value $_.'client-manuf'
@@ -198,9 +231,11 @@ function parseNetXML ($file) {
       Add-Member -InputObject $wirelessClient -MemberType NoteProperty -Name "maxseenrate" -Value $_.'maxseenrate'
       Add-Member -InputObject $wirelessClient -MemberType NoteProperty -Name "datasize" -Value $_.'datasize'
       Add-Member -InputObject $wirelessClient -MemberType NoteProperty -Name "start-time" -Value $startTime
-      Add-Member -InputObject $wirelessClient -MemberType NoteProperty -Name "BSSID" -Value $BSSID
+      #Add-Member -InputObject $wirelessClient -MemberType NoteProperty -Name "BSSID" -Value $BSSID
 
       $wirelessClient | Export-Csv -Path "${psscriptroot}\wirelessClient.csv" -Append -NoTypeInformation
+
+      }
 
       }
 
@@ -213,6 +248,8 @@ function parseNetXML ($file) {
       $index = $xml.'detection-run'.'wireless-network'.'wireless-client'.'packets'.indexOf($_);
       $clientMAC = $xml.'detection-run'.'wireless-network'.'wireless-client'.'client-mac'[$index]
 
+      if ( $_ -ne $NULL) { 
+
       Add-Member -InputObject $wirelessClientPackets -MemberType NoteProperty -Name "llc" -Value $_.'llc'
       Add-Member -InputObject $wirelessClientPackets -MemberType NoteProperty -Name "data" -Value $_.'data'
       Add-Member -InputObject $wirelessClientPackets -MemberType NoteProperty -Name "crypt" -Value $_.'crypt'
@@ -224,6 +261,8 @@ function parseNetXML ($file) {
 
       $wirelessClientPackets | Export-Csv -Path "${psscriptroot}\wirelessClientPackets.csv" -Append -NoTypeInformation
 
+      }
+
     }
 
     $xml.'detection-run'.'wireless-network'.'wireless-client'.'snr-info' | ForEach-Object {
@@ -234,6 +273,8 @@ function parseNetXML ($file) {
       $wirelessClientSNRInfo = New-Object Object
       $index = $xml.'detection-run'.'wireless-network'.'wireless-client'.'snr-info'.indexOf($_);
       $clientMAC = $xml.'detection-run'.'wireless-network'.'wireless-client'.'client-mac'[$index]
+
+      if ( $_ -ne $NULL) {
 
       Add-Member -InputObject $wirelessClientSNRInfo -MemberType NoteProperty -Name "last_signal_dbm" -Value $_.'last_signal_dbm'
       Add-Member -InputObject $wirelessClientSNRInfo -MemberType NoteProperty -Name "last_noise_dbm" -Value $_.'last_noise_dbm'
@@ -254,6 +295,8 @@ function parseNetXML ($file) {
 
       }
 
+      }
+
     $xml.'detection-run'.'wireless-network'.'wireless-client'.'gps-info' | ForEach-Object {
 
     # Create the wirelessClientGPSInfo object
@@ -262,6 +305,8 @@ function parseNetXML ($file) {
       $wirelessClientGPSInfo = New-Object Object
       $index = $xml.'detection-run'.'wireless-network'.'wireless-client'.'gps-info'.indexOf($_);
       $clientMAC = $xml.'detection-run'.'wireless-network'.'wireless-client'.'client-mac'[$index] 
+
+      if ( $_ -ne $NULL) {
 
       Add-Member -InputObject $wirelessClientGPSInfo -MemberType NoteProperty -Name "min-lat" -Value $_.'min-lat'
       Add-Member -InputObject $wirelessClientGPSInfo -MemberType NoteProperty -Name "min-lon" -Value $_.'min-lon'
@@ -284,22 +329,28 @@ function parseNetXML ($file) {
 
       }
 
+      }
+
     $xml.'detection-run'.'wireless-network'.'wireless-client'.'seen-card' | ForEach-Object {
 
       # Create wirelessClientSeenCard object
 
       $startTime = $xml.'detection-run'.'start-time'
       $wirelessClientSeenCard = New-Object Object 
-      $index = $xml.'detection-run'.'wireless-network'.'wireless-client'.'seen-card'.indexOf($_);
-      $clientMAC = $xml.'detection-run'.'wireless-network'.'wireless-client'.'client-mac'[$index] 
+      #$index = $xml.'detection-run'.'wireless-network'.'wireless-client'.'seen-card'.indexOf($_);
+      #$clientMAC = $xml.'detection-run'.'wireless-network'.'wireless-client'.'client-mac'[$index] 
+
+      if ( $_ -ne $NULL) {
 
       Add-Member -InputObject $wirelessClientSeenCard -MemberType NoteProperty -Name "seen-uuid" -Value $_.'seen-uuid'
       Add-Member -InputObject $wirelessClientSeenCard -MemberType NoteProperty -Name "seen-time" -Value $_.'seen-time'
       Add-Member -InputObject $wirelessClientSeenCard -MemberType NoteProperty -Name "seen-packets" -Value $_.'seen-packets'
       Add-Member -InputObject $wirelessClientSeenCard -MemberType NoteProperty -Name "start-time" -Value $startTime
-      Add-Member -InputObject $wirelessClientSeenCard -MemberType NoteProperty -Name "client-mac" -Value $clientMAC
+      #Add-Member -InputObject $wirelessClientSeenCard -MemberType NoteProperty -Name "client-mac" -Value $clientMAC
 
       $wirelessClientSeenCard | Export-Csv -Path "${psscriptroot}\wirelessClientSeenCard.csv" -Append -NoTypeInformation
+
+      }
 
     }
 
